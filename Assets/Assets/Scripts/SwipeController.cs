@@ -19,6 +19,8 @@ public class SwipeController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(this.transform.GetChild(0).GetChild(1).name);
+
         Pos = new float[transform.childCount];
         float distance = 1f / (Pos.Length - 1f);
         for (int i = 0; i < Pos.Length; i++)
@@ -52,12 +54,18 @@ public class SwipeController : MonoBehaviour
             {
                 timer = 0;
                 timerFinish = true;
+                if (timerFinish == true)
+                {
+                    Debug.Log("JOSE");
+                    ChangeVid(1);
+                }
             }
         }
         if (Position != 0)
         {
             timer = 3;
             timerFinish = false;
+            ChangeVid(0);
         }
     }
     public void next()
@@ -83,9 +91,22 @@ public class SwipeController : MonoBehaviour
         }
         else
         {
-            Debug.Log("AS");
+
             Position = Pos[2];
         }
 
+    }
+    public void ChangeVid(int flag) {
+        if (flag == 1)
+        {
+            this.transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
+            this.transform.GetChild(0).GetChild(2).gameObject.SetActive(false);
+        }
+        else
+        {
+            this.transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
+            this.transform.GetChild(0).GetChild(2).gameObject.SetActive(true);
+        }
+        
     }
 }
