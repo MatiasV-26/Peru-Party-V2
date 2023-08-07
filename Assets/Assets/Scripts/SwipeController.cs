@@ -9,17 +9,18 @@ public class SwipeController : MonoBehaviour
     float Position = 0;
     float[] Pos;
     int posAux = 0;
+    public float timer = 3;
+    public bool timerFinish = false;
     // Start is called before the first frame update
     void Start()
     {
-        
     }
 
     // Update is called once per frame
     void Update()
     {
         Pos = new float[transform.childCount];
-        float distance = 1f / (Pos.Length -1f);
+        float distance = 1f / (Pos.Length - 1f);
         for (int i = 0; i < Pos.Length; i++)
         {
             Pos[i] = distance * i;
@@ -28,20 +29,48 @@ public class SwipeController : MonoBehaviour
         {
             Position = ScrollBar.GetComponent<Scrollbar>().value;
         }
-        else {
-            for (int i = 0; i < Pos.Length; i++) {
-                if (Position < Pos[i] + (distance / 2) && Position > Pos[i] - (distance / 2)) {
+        else
+        {
+            for (int i = 0; i < Pos.Length; i++)
+            {
+                if (Position < Pos[i] + (distance / 2) && Position > Pos[i] - (distance / 2))
+                {
                     ScrollBar.GetComponent<Scrollbar>().value = Mathf.Lerp(ScrollBar.GetComponent<Scrollbar>().value, Pos[i], 0.15f);
                     posAux = i;
                 }
             }
         }
+        if (Position <= 0)
+        {
+            //Debug.Log("Estamos en Warmisitay");
+            if (timer > 0)
+            {
+                timer -= Time.deltaTime;
+                //Debug.Log(timer);
+            }
+            else
+            {
+                timer = 0;
+                timerFinish = true;
+            }
+        }
+        if (Position != 0)
+        {
+            timer = 3;
+            timerFinish = false;
+        }
     }
-    public void next(){
-        if (posAux < Pos.Length - 1) {
+    public void next()
+    {
+        if (posAux < Pos.Length - 1)
+        {
             posAux += 1;
             Position = Pos[posAux];
             Debug.Log("Estas en la posición: " + Position);
+        }
+        else
+        {
+            Position = Pos[0];
         }
     }
     public void previous()
@@ -52,5 +81,11 @@ public class SwipeController : MonoBehaviour
             Position = Pos[posAux];
             Debug.Log("Estas en la posición: " + Position);
         }
+        else
+        {
+            Debug.Log("AS");
+            Position = Pos[2];
+        }
+
     }
 }
