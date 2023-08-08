@@ -56,7 +56,6 @@ public class SwipeController : MonoBehaviour
                 timerFinish = true;
                 if (timerFinish == true)
                 {
-                    Debug.Log("JOSE");
                     ChangeVid(1);
                 }
             }
@@ -100,13 +99,18 @@ public class SwipeController : MonoBehaviour
         if (flag == 1)
         {
             this.transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
-            this.transform.GetChild(0).GetChild(2).gameObject.SetActive(false);
+            this.transform.GetChild(0).GetChild(2).gameObject.SetActive(true);
+            //this.transform.GetChild(0).GetChild(3).gameObject.SetActive(false);
+            this.transform.GetChild(0).GetChild(3).transform.GetComponent<Animator>().Play("SongFadeOut");
         }
         else
         {
             this.transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
-            this.transform.GetChild(0).GetChild(2).gameObject.SetActive(true);
+            this.transform.GetChild(0).GetChild(2).gameObject.SetActive(false);
+            //this.transform.GetChild(0).GetChild(3).gameObject.SetActive(true);
+            this.transform.GetChild(0).GetChild(3).transform.GetComponent<Animator>().Play("SongFade");
+
         }
-        
+
     }
 }
